@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Day PipocaTech - Ofertas Especiais</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #6C63FF; min-height: 100vh; padding: 20px; color: #FFFFFF; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-radius: 20px; padding: 30px; text-align: center; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .logo-container { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 10px; }
+        .logo { width: 60px; height: 60px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .logo img { width: 50px; height: 50px; border-radius: 50%; }
+        .stats { background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); border-radius: 15px; padding: 30px; text-align: center; color: white; margin-bottom: 20px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .stat-item h3 { font-size: 2rem; color: #4facfe; margin-bottom: 5px; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .product-card { background: white; border-radius: 15px; padding: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); position: relative; transition: all 0.3s ease; }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
+        .product-image { width: 100%; height: 200px; background: #f8f9fa; border-radius: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .product-image img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; }
+        .product-name { font-size: 16px; font-weight: 600; color: #333; margin: 10px 0; text-align: center; }
+        .buy-btn { display: block; width: 100%; padding: 12px; background: linear-gradient(135deg, #FFD369 0%, #ee5a24 100%); color: white; border: none; border-radius: 8px; font-weight: 600; text-decoration: none; text-align: center; transition: all 0.3s ease; }
+        .buy-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(238, 90, 36, 0.4); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+                <div class="logo"><img src="logo.png" alt="PipocaTech Logo"></div>
+                <h1>Prime Day PipocaTech</h1>
+            </div>
+            <p>Ofertas Especiais Amazon Prime Day - Equipamentos Gamer e Tech</p>
+        </div>
+
+        <div class="stats">
+            <div class="stats-grid">
+                <div class="stat-item"><h3 id="totalProducts">0</h3><p>Produtos em Oferta</p></div>
+                <div class="stat-item"><h3 id="totalCategories">0</h3><p>Categorias</p></div>
+                <div class="stat-item"><h3>Prime Day</h3><p>Ofertas Especiais</p></div>
+                <div class="stat-item"><h3>PipocaTech</h3><p>Curadoria Especializada</p></div>
+            </div>
+        </div>
+
+        <div class="products-grid" id="productsGrid"></div>
+    </div>
+
+    <script>
+        let products = [
+            { id: 1, name: "Gabinete Gamer Redragon Wideload Pro", category: "Gabinete", link: "https://amzn.to/40ehYE0", image: "https://m.media-amazon.com/images/I/61zSOhFBi9L.__AC_SX300_SY300_QL70_ML2_.jpg" },
+            { id: 2, name: "TECLADO MECÂNICO GAMER REDRAGON VALHEIM", category: "Teclado", link: "https://amzn.to/4liT5iQ", image: "https://m.media-amazon.com/images/I/61fq5PhqPQL._AC_SL1500_.jpg" },
+            { id: 3, name: "Mouse Gamer Redragon Cobra Pro RGB", category: "Mouse", link: "https://amzn.to/3GD8fjZ", image: "https://m.media-amazon.com/images/I/51JmbHCiqQL._AC_SL1500_.jpg" },
+            { id: 4, name: "Headset Gamer Redragon Zeus Pro", category: "Headset", link: "https://amzn.to/3TCZolf", image: "https://m.media-amazon.com/images/I/51H56v8U4HL._AC_SX679_.jpg" },
+            { id: 5, name: "Water Cooler Gamdias Aura GL240 V2", category: "Cooler", link: "https://amzn.to/4lSu3ad", image: "https://m.media-amazon.com/images/I/61XvU+auwZL._AC_SL1500_.jpg" },
+            { id: 6, name: "Headset Gamer Kalkan Ragnar RGB - SEM FIO", category: "Headset", link: "https://amzn.to/4ltqZBC", image: "https://m.media-amazon.com/images/I/71rScXHnIqL._AC_SL1500_.jpg" },
+            { id: 7, name: "Mousepad Gamer Redragon Flick XL Special Edition Cypher", category: "Mousepad", link: "https://amzn.to/4nFHkVr", image: "https://m.media-amazon.com/images/I/71fDPOZwuUL._AC_SL1500_.jpg" },
+            { id: 8, name: "Cadeira Redragon Office Hela Preta", category: "Cadeira", link: "https://amzn.to/4ePAmJo", image: "https://m.media-amazon.com/images/I/51qBeaSiRJL._AC_SL1000_.jpg" },
+            { id: 9, name: "Controle Redragon Harrow Pro Wireless", category: "Controle", link: "https://amzn.to/44oIQDM", image: "https://m.media-amazon.com/images/I/61MeRLgi-YL._AC_SL1500_.jpg" },
+            { id: 10, name: "SSD Externo Redragon Ignis - 1TB", category: "SSD", link: "https://amzn.to/3Is5fY9", image: "https://m.media-amazon.com/images/I/418Nxz2DeZL._AC_SL1080_.jpg" },
+            { id: 11, name: "Fonte RGPS 500W", category: "Fonte", link: "https://amzn.to/4lP6Pl9", image: "https://m.media-amazon.com/images/I/71RopNczZlL._AC_SL1500_.jpg" },
+            { id: 12, name: "Gabinete Gamer Redragon Wideload Pro Branco", category: "Gabinete", link: "https://amzn.to/44qN1yP", image: "https://m.media-amazon.com/images/I/61EFNhsLQ7L._AC_SL1000_.jpg" }
+        ];
+        document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = products.map(product => `
+                <div class="product-card">
+                    <div class="product-image"><img src="${product.image}" alt="${product.name}"></div>
+                    <h3 class="product-name">${product.name}</h3>
+                    <a href="${product.link}" target="_blank" class="buy-btn">Comprar Agora</a>
+                </div>
+            `).join('');
+        });
+    </script>
+</body>
+</html>
